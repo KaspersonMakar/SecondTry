@@ -14,7 +14,7 @@ class BoardTest {
   }
 
   @Test
-  void testSetAndGetPiece() {
+  void setAndGetPiece_successFlow() {
     Position position = new Position(0, 0);
     Piece piece = new Piece(Color.WHITE, PieceType.ROOK, position);
 
@@ -27,7 +27,7 @@ class BoardTest {
   }
 
   @Test
-  void testDeletePiece() {
+  void deletePiece_successFlow() {
     Position position = new Position(0, 0);
     Piece piece = new Piece(Color.WHITE, PieceType.ROOK, position);
 
@@ -39,7 +39,7 @@ class BoardTest {
   }
 
   @Test
-  void testClearBoard() {
+  void clearBoard_successFlow() {
     board.setPiece(new Piece(Color.WHITE, PieceType.ROOK, new Position(0, 0)));
     board.setPiece(new Piece(Color.BLACK, PieceType.QUEEN, new Position(7, 7)));
 

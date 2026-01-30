@@ -12,15 +12,23 @@ public class BoardService {
   private static final int WHITE_PAWN_ROW = 1;
   private static final int BLACK_PAWN_ROW = 6;
 
-  public void movePiece(Board board, Position from, Position to) {
-    Optional<Piece> pieceOptional = Optional.ofNullable(board.getPiece(from));
+  private boolean isValidFileToMoveOn(Board board, Position to) {
+    if (to.row() > 7 || to.row() < 0 || to.column() > 7 || to.column() < 0) {
+      System.out.println("'to' is out of bounds");
+      return false;
+    }
+    if (board.getPiece(to) != null) {
+      System.out.println("'to' file not empty");
+      return false;
+    }
+    return true;
+  }
 
-    if (pieceOptional.isPresent()) {
-      Piece piece = pieceOptional.get();
+  public void movePiece(Board board, Position from, Position to) {
+    Piece piece = board.getPiece(from);
+    if (isValidFileToMoveOn(board, to) && piece != null) {
       board.setPiece(to, piece);
       board.deletePiece(from);
-    } else {
-      System.out.println("movePiece(Position from): getPiece(from) == null");
     }
   }
 
