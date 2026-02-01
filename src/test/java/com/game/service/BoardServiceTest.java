@@ -20,55 +20,6 @@ class BoardServiceTest {
     boardService.initialize(board);
   }
 
-  private boolean checkEmptyFiles() {
-    boolean checkResult = true;
-    for (int col = 0; col < 8; col++) {
-      for (int row = 2; row < 6; row++) {
-        if (board.getPiece(new Position(row, col)) != null) {
-          checkResult = false;
-        }
-      }
-    }
-    return checkResult;
-  }
-
-  private boolean checkPawnFiles() {
-    boolean checkResult = true;
-    for (int col = 0; col < 8; col++) {
-      for (int row : new int[] {1, 6}) {
-        if (board.getPiece(new Position(row, col)).getPieceType() != PieceType.PAWN) {
-          checkResult = false;
-        }
-      }
-    }
-    return checkResult;
-  }
-
-  private boolean checkBackRankFiles() {
-    Map<Integer, PieceType> expectedPieces =
-        Map.of(
-            0, PieceType.ROOK,
-            1, PieceType.KNIGHT,
-            2, PieceType.BISHOP,
-            3, PieceType.QUEEN,
-            4, PieceType.KING,
-            5, PieceType.BISHOP,
-            6, PieceType.KNIGHT,
-            7, PieceType.ROOK);
-
-    for (int row : new int[] {0, 7}) {
-      for (int col = 0; col < 8; col++) {
-        PieceType expected = expectedPieces.get(col);
-        PieceType actual = board.getPiece(new Position(row, col)).getPieceType();
-
-        if (actual != expected) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
   @Test
   void initialize_should_initialize_successfully() {
     assertTrue(checkEmptyFiles());
@@ -116,5 +67,54 @@ class BoardServiceTest {
 
     assertEquals(PieceType.ROOK, board.getPiece(from).getPieceType());
     assertNull(board.getPiece(to));
+  }
+
+  private boolean checkEmptyFiles() {
+    boolean checkResult = true;
+    for (int col = 0; col < 8; col++) {
+      for (int row = 2; row < 6; row++) {
+        if (board.getPiece(new Position(row, col)) != null) {
+          checkResult = false;
+        }
+      }
+    }
+    return checkResult;
+  }
+
+  private boolean checkPawnFiles() {
+    boolean checkResult = true;
+    for (int col = 0; col < 8; col++) {
+      for (int row : new int[] {1, 6}) {
+        if (board.getPiece(new Position(row, col)).getPieceType() != PieceType.PAWN) {
+          checkResult = false;
+        }
+      }
+    }
+    return checkResult;
+  }
+
+  private boolean checkBackRankFiles() {
+    Map<Integer, PieceType> expectedPieces =
+        Map.of(
+            0, PieceType.ROOK,
+            1, PieceType.KNIGHT,
+            2, PieceType.BISHOP,
+            3, PieceType.QUEEN,
+            4, PieceType.KING,
+            5, PieceType.BISHOP,
+            6, PieceType.KNIGHT,
+            7, PieceType.ROOK);
+
+    for (int row : new int[] {0, 7}) {
+      for (int col = 0; col < 8; col++) {
+        PieceType expected = expectedPieces.get(col);
+        PieceType actual = board.getPiece(new Position(row, col)).getPieceType();
+
+        if (actual != expected) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
