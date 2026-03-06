@@ -4,6 +4,8 @@ import com.game.model.*;
 
 public class MoveValidator {
   public boolean isMoveValid(Board board, Position from, Position to) {
+    if (to == null) return false;
+    if (from == null) return false;
     if (from.equals(to)) return false;
     if (!isValidCoordinate(to)) return false;
 
@@ -19,9 +21,7 @@ public class MoveValidator {
       return false;
     }
 
-    // 3. (Опционально для базовой логики, но обязательно для шахмат)
-    // Проверка: не открывает ли этот ход шаха своему королю?
-    // Обычно это делается симуляцией хода на копии доски.
+    // toDo Проверка: не открывает ли этот ход шаха своему королю?
     return true;
   }
 
