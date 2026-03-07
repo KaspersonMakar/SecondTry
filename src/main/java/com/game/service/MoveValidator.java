@@ -3,7 +3,7 @@ package com.game.service;
 import com.game.model.*;
 
 public class MoveValidator {
-  public boolean isMoveValid(Board board, Position from, Position to) {
+  public boolean isMoveValid(Board board, Position from, Position to, Color turn) {
     if (to == null) return false;
     if (from == null) return false;
     if (from.equals(to)) return false;
@@ -21,8 +21,16 @@ public class MoveValidator {
       return false;
     }
 
+    if (!isCurrentTurn(piece, turn)) {
+      return false;
+    }
+
     // toDo Проверка: не открывает ли этот ход шаха своему королю?
     return true;
+  }
+
+  private boolean isCurrentTurn(Piece piece, Color turn) {
+    return piece.getColor() == turn;
   }
 
   private boolean isValidGeometryAndPath(Board board, Piece piece, Position from, Position to) {
