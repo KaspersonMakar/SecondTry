@@ -4,12 +4,12 @@ import com.game.model.Position;
 
 import java.util.Scanner;
 
-public class InputReader {
+public class MoveReader {
   private final Scanner console;
   private Position from;
   private Position to;
 
-  public InputReader(Scanner console) {
+  public MoveReader(Scanner console) {
     this.console = console;
   }
 
