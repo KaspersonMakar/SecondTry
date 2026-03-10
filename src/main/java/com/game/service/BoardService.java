@@ -11,14 +11,11 @@ public class BoardService {
   private static final int LAST_ROW = BOARD_SIZE - 1;
   private static final int WHITE_PAWN_ROW = 1;
   private static final int BLACK_PAWN_ROW = 6;
-  MoveValidator moveValidator = new MoveValidator();
 
   public void movePiece(Board board, Position from, Position to) {
     Piece piece = board.getPiece(from);
-    if (moveValidator.isMoveValid(board, from, to)) {
-      board.setPiece(to, piece);
-      board.deletePiece(from);
-    }
+    board.setPiece(to, piece);
+    board.deletePiece(from);
   }
 
   public void initialize(Board board) {
