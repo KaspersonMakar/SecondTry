@@ -25,8 +25,63 @@ public class MoveValidator {
       return false;
     }
 
-    // toDo Проверка: не открывает ли этот ход шаха своему королю?
+    if (leavesKingInCheck(board, from, to, turn)) {
+      return false;
+    }
+
     return true;
+  }
+
+  private boolean leavesKingInCheck(Board board, Position from, Position to, Color turn) {
+    Piece movingPiece = board.getPiece(from);
+    Piece capturedPiece = board.getPiece(to);
+
+    board.deletePiece(from);
+    board.setPiece(to, movingPiece);
+
+    Position kingPos = findKing(board, turn);
+
+    boolean inCheck = false;
+    if (kingPos != null) {
+      inCheck = isSquareAttacked(board, kingPos, turn);
+    }
+
+    board.setPiece(from, movingPiece);
+    board.deletePiece(to);
+    if (capturedPiece != null) {
+      board.setPiece(to, capturedPiece);
+    }
+
+    return inCheck;
+  }
+
+  private Position findKing(Board board, Color color) {
+    for (int row = 0; row < 8; row++) {
+      for (int col = 0; col < 8; col++) {
+        Position p = new Position(row, col);
+        Piece piece = board.getPiece(p);
+        if (piece != null && piece.getPieceType() == PieceType.KING && piece.getColor() == color) {
+          return p;
+        }
+      }
+    }
+    return null;
+  }
+
+  private boolean isSquareAttacked(Board board, Position targetSquare, Color defenderColor) {
+    for (int row = 0; row < 8; row++) {
+      for (int col = 0; col < 8; col++) {
+        Position p = new Position(row, col);
+        Piece piece = board.getPiece(p);
+
+        if (piece != null && piece.getColor() != defenderColor) {
+          if (isValidGeometryAndPath(board, piece, p, targetSquare)) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   }
 
   private boolean isCurrentTurn(Piece piece, Color turn) {
